@@ -1,0 +1,10 @@
+```plantuml
+@startuml
+Cliente->MsEndereco : Requisição POST /endereco
+MsEndereco->ViaCEP : Requisição GET viacep.com.br/ws/{cep}/json/
+ViaCEP->MsEndereco : Retorna os dados do endereço
+MsEndereco->BancoDeDados : Grava os dados de log
+MsEndereco->BancoDeDados : Cadastra os dados do endereço
+MsEndereco->Cliente : Retorna os dados dados do endereço cadastrado
+@enduml
+```

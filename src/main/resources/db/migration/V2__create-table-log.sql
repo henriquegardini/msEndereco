@@ -1,0 +1,7 @@
+CREATE TABLE log (
+    id BIGINT NOT NULL AUTO_INCREMENT,
+    dataHoraProcessamento TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    solicitacao VARCHAR(255) NOT NULL,
+    resposta VARCHAR(255) NOT NULL,
+    PRIMARY KEY (id)
+);
