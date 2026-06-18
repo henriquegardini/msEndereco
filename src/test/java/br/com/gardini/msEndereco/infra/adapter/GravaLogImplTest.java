@@ -1,4 +1,4 @@
-package br.com.gardini.msEndereco.domain.service;
+package br.com.gardini.msEndereco.infra.adapter;
 
 import br.com.gardini.msEndereco.domain.entity.Log;
 import br.com.gardini.msEndereco.domain.repository.LogsRepository;
@@ -18,13 +18,13 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
 @ExtendWith(MockitoExtension.class)
-class LogServiceTest {
+class GravaLogImplTest {
 
     @Mock
     private LogsRepository logsRepository;
 
     @InjectMocks
-    private LogService logService;
+    private GravaLogImpl gravaLogImpl;
 
     private Log log;
 
@@ -35,7 +35,7 @@ class LogServiceTest {
 
     @Test
     void salvarLog_deveExecutarComSucesso() {
-        logService.salvarLog(log);
+        gravaLogImpl.salvarLog(log);
 
         verify(logsRepository, times(1)).save(log);
     }
@@ -46,7 +46,7 @@ class LogServiceTest {
         var resposta = "INSERT";
         var logParaSalvar = new Log(LocalDateTime.now(),solicitacao, resposta);
 
-        logService.salvarLog(logParaSalvar);
+        gravaLogImpl.salvarLog(logParaSalvar);
 
         ArgumentCaptor<Log> captor = ArgumentCaptor.forClass(Log.class);
         verify(logsRepository).save(captor.capture());
@@ -61,8 +61,8 @@ class LogServiceTest {
         var log1 = new Log(LocalDateTime.now(), "Erro ao buscar CEP", "ERROR");
         var log2 = new Log(LocalDateTime.now(), "Endereço deletado", "DELETE");
 
-        logService.salvarLog(log1);
-        logService.salvarLog(log2);
+        gravaLogImpl.salvarLog(log1);
+        gravaLogImpl.salvarLog(log2);
 
         ArgumentCaptor<Log> captor = ArgumentCaptor.forClass(Log.class);
         verify(logsRepository, times(2)).save(captor.capture());
@@ -77,7 +77,7 @@ class LogServiceTest {
 
     @Test
     void salvarLog_naoDeveLancarExcecao() {
-        assertDoesNotThrow(() -> logService.salvarLog(log));
+        assertDoesNotThrow(() -> gravaLogImpl.salvarLog(log));
         verify(logsRepository).save(log);
     }
 
@@ -85,7 +85,7 @@ class LogServiceTest {
     void salvarLog_comDescricaoVazia() {
         var logVazio = new Log(LocalDateTime.now(), "", "INFO");
 
-        logService.salvarLog(logVazio);
+        gravaLogImpl.salvarLog(logVazio);
 
         ArgumentCaptor<Log> captor = ArgumentCaptor.forClass(Log.class);
         verify(logsRepository).save(captor.capture());

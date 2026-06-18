@@ -3,8 +3,8 @@ package br.com.gardini.msEndereco.infra.adapter;
 import br.com.gardini.msEndereco.domain.RegraDeNegocioException;
 import br.com.gardini.msEndereco.domain.dto.DadosBuscaCep;
 import br.com.gardini.msEndereco.domain.entity.Log;
-import br.com.gardini.msEndereco.domain.service.LogService;
 import br.com.gardini.msEndereco.infra.port.BuscaEnderecoPeloCep;
+import br.com.gardini.msEndereco.infra.port.GravaLog;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
@@ -16,11 +16,11 @@ import java.time.LocalDateTime;
 public class BuscaEnderecoPeloCepImpl implements BuscaEnderecoPeloCep {
 
     private final RestClient restClient;
-    private final LogService logService;
+    private final GravaLog gravaLog;
 
-    public BuscaEnderecoPeloCepImpl(RestClient.Builder restClientBuilder, LogService logService) {
+    public BuscaEnderecoPeloCepImpl(RestClient.Builder restClientBuilder, GravaLogImpl gravaLog) {
         this.restClient = restClientBuilder.build();
-        this.logService = logService;
+        this.gravaLog = gravaLog;
     }
 
     @Override
@@ -34,11 +34,11 @@ public class BuscaEnderecoPeloCepImpl implements BuscaEnderecoPeloCep {
                     .retrieve()
                     .body(DadosBuscaCep.class);
             var log = new Log(LocalDateTime.now(), cep, resposta.toString());
-            logService.salvarLog(log);
+            gravaLog.salvarLog(log);
             return resposta;
         } catch (Exception e) {
             var log = new Log(LocalDateTime.now(), cep, e.getMessage().toString().substring(0, 255));
-            logService.salvarLog(log);
+            gravaLog.salvarLog(log);
             throw new RegraDeNegocioException("Ocorreu um erro na requisição do api externa da viacep!");
         }
     }
