@@ -81,5 +81,5 @@ jobs:
     - name: Execução dos testes
       run: mvn test
 
-    - name: Construção da aplicação
-      run: docker-compose up -d
+    - name: Criação do pacote
+      run: mvn clean package
