@@ -3,7 +3,7 @@ docker build -t msendereco:1.0-java17 .
 
 # Executar container
 docker run -p 8080:8080 \
-  -e SPRING_DATASOURCE_URL=jdbc:mysql://host.docker.internal:3306/dados \
+  -e SPRING_DATASOURCE_URL=jdbc:mysql://host.docker.internal:3306/root \
   -e SPRING_DATASOURCE_USERNAME=root \
   -e SPRING_DATASOURCE_PASSWORD=root \
   msendereco:1.0-java17
