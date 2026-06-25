@@ -82,4 +82,4 @@ jobs:
       run: mvn test
 
     - name: Criação do pacote
-      run: mvn clean package
+      run: mvn clean package -DskipTests
