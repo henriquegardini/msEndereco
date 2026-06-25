@@ -1,14 +1,12 @@
-version: '3.8'
-
 services:
   mysql:
     image: mysql:8.0
     container_name: msendereco_mysql
     environment:
       MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: dados
+      MYSQL_DATABASE: root
     ports:
-      - "3306:3306"
+      - "3307:3307"
     volumes:
       - mysql_data:/var/lib/mysql
     healthcheck:
@@ -21,7 +19,7 @@ services:
     build: .
     container_name: msendereco_app
     environment:
-      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/dados?createDatabaseIfNotExist=true
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/root?createDatabaseIfNotExist=true
       SPRING_DATASOURCE_USERNAME: root
       SPRING_DATASOURCE_PASSWORD: root
       SPRING_JPA_HIBERNATE_DDL_AUTO: create-drop
